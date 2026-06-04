@@ -1,0 +1,152 @@
+:root {
+  font-family: Inter, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  line-height: 1.4;
+  color: #111827;
+  background-color: #f3f4f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app-shell {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+.app-header p {
+  margin-top: 8px;
+  color: #4b5563;
+}
+
+.tab-row {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 16px;
+}
+
+.tab-btn {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab-btn.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.card h2 {
+  margin: 0;
+}
+
+.subtitle {
+  margin-top: 7px;
+  color: #6b7280;
+}
+
+.input-label {
+  display: block;
+  font-weight: 600;
+  margin: 14px 0 6px;
+}
+
+.text-input,
+.file-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px 11px;
+  background: #fff;
+}
+
+.selected-file {
+  margin: 8px 0 0;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+.button-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 9px 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.btn.secondary {
+  background: #ffffff;
+  color: #111827;
+  border-color: #d1d5db;
+}
+
+.error-text {
+  margin-top: 12px;
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.result-box {
+  margin-top: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #f9fafb;
+  padding: 14px;
+}
+
+.result-box h3 {
+  margin: 0 0 8px;
+}
+
+.result-box p {
+  margin: 6px 0;
+  overflow-wrap: anywhere;
+}
+
+.status-valid {
+  color: #15803d;
+  font-weight: 700;
+}
+
+.status-tampered {
+  color: #b91c1c;
+  font-weight: 700;
+}

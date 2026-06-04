@@ -54,6 +54,25 @@ def _get_contract():
     return _contract
 
 
+def ensure_blockchain_ready() -> None:
+    if not _w3.is_connected():
+        raise RuntimeError(f"Unable to connect to blockchain provider: {BLOCKCHAIN_PROVIDER}")
+
+    if not CONTRACT_ADDRESS:
+        raise RuntimeError("CONTRACT_ADDRESS is not configured. Run backend/scripts/init_blockchain.py first.")
+
+    if not ABI_PATH.exists():
+        raise RuntimeError(f"Contract ABI file not found at {ABI_PATH}")
+
+    checksum_address = Web3.to_checksum_address(CONTRACT_ADDRESS)
+    code = _w3.eth.get_code(checksum_address)
+    if not code or code in {b"", b"\x00"}:
+        raise RuntimeError(f"No deployed contract found at configured address: {checksum_address}")
+
+    # Instantiate once to validate ABI/address compatibility.
+    _get_contract()
+
+
 def register_on_chain(hash_hex: str) -> str:
     hash_bytes = _normalize_hash(hash_hex)
     contract = _get_contract()
