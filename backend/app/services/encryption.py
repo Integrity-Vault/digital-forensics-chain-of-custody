@@ -1,5 +1,8 @@
 """
-AES encryption/decryption service placeholder.
+AES encryption/decryption service placeholder (NOT USED).
+
+Evidence files are stored unencrypted in ``backend/storage/``. Integrity is
+provided by SHA-256 hashing and blockchain verification. See root README.md.
 
 This module defines the interface for symmetric encryption operations used to
 protect off-chain evidence files. The concrete implementation should:

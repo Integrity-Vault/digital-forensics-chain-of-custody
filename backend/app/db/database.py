@@ -1,9 +1,8 @@
 """
 Database configuration for the backend service.
 
-This module is responsible for creating the PostgreSQL database engine and
-dependency helpers. It does not define ORM models; those should live in a
-dedicated models package.
+Creates the SQLAlchemy engine (SQLite by default) and the FastAPI ``get_db``
+dependency. ORM models live in ``app.db.models``.
 """
 
 import os

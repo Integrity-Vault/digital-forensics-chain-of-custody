@@ -1,47 +1,48 @@
-## Blockchain Layer (`blockchain/`)
+## Blockchain (`blockchain/`)
 
-The blockchain layer contains the **Ethereum smart contracts** and deployment tooling used to provide an immutable record of evidence registration and chain‑of‑custody events.
+Solidity smart contract and deployment tooling for evidence hash registration on **Ganache**.
 
-### Purpose of the Smart Contract
+### Contract: `EvidenceCustody.sol`
 
-The primary contract, `contracts/EvidenceCustody.sol`, is responsible for:
+| Function | Purpose |
+|----------|---------|
+| `registerEvidence(bytes32 hash)` | Store hash on-chain (one-time per hash) |
+| `verifyEvidence(bytes32 hash)` | Returns `true` if hash was registered |
 
-- **Evidence registration**
-  - Storing a canonical identifier for each piece of evidence.
-  - Recording the **SHA‑256 hash** of the off‑chain evidence file.
-  - Optionally storing a hash of structured case metadata.
-- **Custody event logging**
-  - Appending a chronological sequence of custody events for each evidence ID.
-  - Ensuring that once recorded, events cannot be altered or deleted.
+The backend converts SHA-256 hex strings to `bytes32` and calls these methods via Web3.py.
 
-### Custody Events
+### Local setup
 
-Custody events capture key actions in the evidence lifecycle, such as:
+1. Start **Ganache** with RPC `http://127.0.0.1:7545`.
+2. Install Node dependencies:
 
-- `COLLECTED`, `REGISTERED`, `TRANSFERRED`, `VIEWED`, `VERIFIED`, `RELEASED`.
-- Who performed the action, when, and between which custodians (where applicable).
-- High‑level location/context and optional hashes of off‑chain reports or notes.
+   ```bash
+   cd blockchain
+   npm install
+   ```
 
-These events form an **immutable, auditable timeline** that supports legal and internal investigation requirements.
+3. Deploy (or use backend helper):
 
-### How Hashes Are Stored On‑Chain
+   ```bash
+   node scripts/deploy.js
+   ```
 
-- The backend computes **SHA‑256** hashes of evidence files and metadata.
-- Those hashes are passed to the `EvidenceCustody` contract:
-  - `evidenceHash` – hash of the evidence content.
-  - `metadataHash` – hash of associated metadata (optional).
-- Hashes are stored in contract storage and emitted in events so that:
-  - Any later copy of the evidence can be recomputed and compared.
-  - Tampering with off‑chain evidence becomes detectable.
+   Or from `backend/`:
 
-### Ganache for Local Development
+   ```bash
+   python scripts/init_blockchain.py
+   ```
 
-During development, the project uses **Ganache** (or a similar local Ethereum node) to:
+   This writes `contract_abi.json`, copies ABI to `backend/app/contract_abi.json`, and sets `CONTRACT_ADDRESS` in `backend/.env`.
 
-- Provide a fast, disposable blockchain for testing contract behavior.
-- Allow developers to deploy `EvidenceCustody` using accounts with test ETH.
-- Exercise end‑to‑end flows:
-  - Backend → contract (evidence registration & custody events).
-  - Frontend → blockchain (read‑only queries and timeline views).
+### Files
 
-The `scripts/deploy.js` file is a **placeholder** deployment script that will be extended to use a tool like **Hardhat** or **Truffle** to compile and deploy the contract to Ganache or other Ethereum networks.
+| Path | Role |
+|------|------|
+| `contracts/EvidenceCustody.sol` | Smart contract source |
+| `scripts/deploy.js` | Compile (solc) + deploy (ethers v6) |
+| `contract_abi.json` | ABI consumed by backend |
+
+### Security note
+
+Use Ganache **test accounts only**. Never commit private keys or production mnemonics.

@@ -1,6 +1,8 @@
 ## Threat Model
 
-This document captures the threat model for the **Blockchain‑Backed Tamper‑Proof Digital Forensics & Chain‑of‑Custody System**. It identifies critical assets, likely threat actors, key threats, and corresponding mitigations.
+> **Implementation note:** This document includes **target-state** security controls (encryption at rest, authentication, PostgreSQL, MFA). The running application uses **SQLite**, **unencrypted** local storage, **no authentication**, and **Ganache**. See the [root README.md](../../README.md) and [system-architecture.md](../architecture/system-architecture.md) for what is actually deployed.
+
+This document captures the threat model for the **Digital Forensics Chain of Custody System**. It identifies critical assets, likely threat actors, key threats, and corresponding mitigations.
 
 The purpose of this threat model is to guide security design decisions, drive testing priorities, and support audits and certifications.
 
