@@ -1,0 +1,8 @@
+{
+  "name": "digital-forensics-chain-of-custody",
+  "private": true,
+  "scripts": {
+    "full:start": "powershell -ExecutionPolicy Bypass -File ./setup.ps1",
+    "full:start:unix": "bash ./setup.sh"
+  }
+}

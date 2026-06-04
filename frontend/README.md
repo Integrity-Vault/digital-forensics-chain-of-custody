@@ -1,30 +1,50 @@
-## Frontend (`frontend/`)
+## Frontend (Phase 3)
 
-The frontend is a **React (Vite)** application that provides the investigator and auditor dashboard for the Blockchain‑Backed Tamper‑Proof Digital Forensics & Chain‑of‑Custody System.
+This is a React + Vite frontend for evidence upload and integrity verification.
 
-Its key responsibilities are:
+### Features
 
-- Presenting intuitive workflows for evidence upload and registration.
-- Visualizing custody timelines and blockchain-backed integrity information.
-- Guiding users through verification flows while hiding underlying complexity.
+- Upload page:
+  - Select a file.
+  - Send file to `POST /upload` as `multipart/form-data`.
+  - Display `file_name`, `evidence_id`, and `hash`.
+- Verify page:
+  - Enter `evidence_id`.
+  - Select a file.
+  - Send data to `POST /verify` as `multipart/form-data`.
+  - Display DB verification (`VALID` / `TAMPERED`) and blockchain verification (`true` / `false`).
 
-### Structure
+### Folder Structure
 
-- `src/components/Navbar.jsx`
-  - Shared navigation bar across pages.
-  - In a full implementation this will integrate with routing and authentication.
+```text
+frontend/
+  src/
+    components/
+    pages/
+      Upload.jsx
+      Verify.jsx
+    services/
+      api.js
+    App.jsx
+```
 
-- `src/pages/UploadEvidence.jsx`
-  - Upload form for new digital evidence.
-  - Captures case metadata and evidence files.
-  - Will call the backend `POST /api/evidence/upload` endpoint and display hashing/encryption progress.
+### Run Frontend
 
-- `src/pages/EvidenceTimeline.jsx`
-  - Timeline view of custody events for a selected evidence item.
-  - Will query the backend (and indirectly the blockchain) for a sequence of custody events and render them chronologically.
+From the `frontend` folder:
 
-- `src/pages/VerifyEvidence.jsx`
-  - Integrity verification workflow.
-  - Allows users to verify a stored or locally provided evidence file against the canonical hash recorded by the backend and smart contract.
+```bash
+npm install
+npm run dev
+```
 
-The frontend is intentionally minimal at this stage, providing skeleton components that can be wired up to the API and smart contracts as the project evolves.
+Open: [http://localhost:5173](http://localhost:5173)
+
+### Connect to Backend
+
+- Ensure FastAPI backend is running on: `http://127.0.0.1:8000`
+- API base URL is configured in `src/services/api.js`
+- Endpoints used:
+  - `POST /upload`
+  - `POST /verify`
+
+If your backend URL changes, update `baseURL` in `src/services/api.js`.

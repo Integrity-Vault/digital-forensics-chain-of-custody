@@ -3,9 +3,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import router as api_router
 from app.db.database import engine
-from app.db.models import Base
+from app.db.migrations import run_startup_migrations
+from app.services.blockchain import ensure_blockchain_ready
 
-Base.metadata.create_all(bind=engine)
+run_startup_migrations(engine)
 
 
 def create_application() -> FastAPI:
@@ -18,11 +19,11 @@ def create_application() -> FastAPI:
     - Integrity verification against blockchain-backed hashes.
     """
     app = FastAPI(
-        title="Blockchain-Backed Digital Forensics & Chain-of-Custody API",
-        version="0.1.0",
+        title="Digital Forensics Chain of Custody API",
+        version="1.0.0",
         description=(
-            "Backend service for managing digital evidence, custody events, "
-            "and integrity verification, backed by PostgreSQL and Ethereum."
+            "Forensic evidence management with case workflows, chain of custody "
+            "audit trails, and blockchain-backed integrity verification."
         ),
     )
 
@@ -36,6 +37,10 @@ def create_application() -> FastAPI:
     )
 
     app.include_router(api_router, prefix="/api")
+
+    @app.on_event("startup")
+    def verify_blockchain_dependencies() -> None:
+        ensure_blockchain_ready()
 
     return app
 

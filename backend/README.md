@@ -24,6 +24,46 @@ This backend is a FastAPI service for evidence ingestion and integrity validatio
   5. Compare current hash vs stored hash.
   6. Return `VERIFIED` or `TAMPERED`.
 
+### Blockchain integration flow
+
+The backend now registers evidence hashes on Ethereum (Ganache) in addition to DB/file storage.
+
+- On upload (`POST /api/evidence/upload`):
+  1. Hash file using SHA-256.
+  2. Persist evidence record in DB and disk storage.
+  3. Attempt to call smart contract `registerEvidence(bytes32 hash)`.
+  4. Return blockchain transaction hash when successful.
+  5. If blockchain registration fails, upload still succeeds (DB stays source-of-truth) and response includes blockchain failure status.
+
+- On verify (`GET /api/evidence/verify/{evidence_id}`):
+  1. Existing file-vs-DB tamper check runs as before (`db_verification`).
+  2. Backend also calls smart contract `verifyEvidence(bytes32 hash)` (`blockchain_verification`).
+
+### Blockchain environment variables
+
+Create `backend/.env` (or export environment vars):
+
+- `BLOCKCHAIN_PROVIDER=http://127.0.0.1:7545`
+- `CONTRACT_ADDRESS=<deployed_contract_address>`
+
+`python-dotenv` is used so these values are loaded automatically.
+
+### Run Ganache and deploy the contract
+
+From project root:
+
+1. Start Ganache GUI or CLI with RPC on `http://127.0.0.1:7545`.
+2. Install Node dependencies needed for deployment:
+   - `npm install ethers solc`
+3. Deploy contract and export ABI:
+   - `node blockchain/scripts/deploy.js`
+4. Copy deployed address into `backend/.env` as `CONTRACT_ADDRESS`.
+
+Deployment script outputs:
+
+- Contract address (for backend config).
+- ABI written to `blockchain/contract_abi.json` (loaded by backend blockchain service).
+
 ### API response format
 
 All endpoints follow a consistent structure.

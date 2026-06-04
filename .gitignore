@@ -4,3 +4,8 @@ __pycache__/
 *.db
 *.key
 *.pem
+venv/
+backend/venv/
+node_modules/
+frontend/dist/
+backend/storage/
