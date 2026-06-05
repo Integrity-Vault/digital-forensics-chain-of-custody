@@ -288,7 +288,3 @@ Never commit Ganache private keys or real `CONTRACT_ADDRESS` values from product
 - [docs/MIGRATION.md](docs/MIGRATION.md) — SQLite upgrades
 
 ---
-
-## License
-
-Academic / demonstration project. See repository license if present.
