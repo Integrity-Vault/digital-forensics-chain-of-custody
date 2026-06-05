@@ -1,9 +1,5 @@
 ## ADR-001: Off‑Chain Storage of Digital Evidence Files
 
-**Status**: Accepted  
-**Date**: 2026‑03‑14  
-**Decision Owner**: Architecture Team  
-
 ### Implementation status (current codebase)
 
 | Aspect | Implemented? | Notes |
