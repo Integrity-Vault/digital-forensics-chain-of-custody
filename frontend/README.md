@@ -1,50 +1,51 @@
-## Frontend (Phase 3)
+## Frontend (`frontend/`)
 
-This is a React + Vite frontend for evidence upload and integrity verification.
+React 18 + Vite dashboard for the Digital Forensics Chain of Custody system.
 
-### Features
+### Pages
 
-- Upload page:
-  - Select a file.
-  - Send file to `POST /upload` as `multipart/form-data`.
-  - Display `file_name`, `evidence_id`, and `hash`.
-- Verify page:
-  - Enter `evidence_id`.
-  - Select a file.
-  - Send data to `POST /verify` as `multipart/form-data`.
-  - Display DB verification (`VALID` / `TAMPERED`) and blockchain verification (`true` / `false`).
+| Page | Purpose |
+|------|---------|
+| Dashboard | Case/evidence stats, tampering alerts, recent custody |
+| Cases | Create and search investigation cases |
+| Case Details | Evidence table, integrity status, custody timeline |
+| Upload Evidence | Attach files to an **existing** case |
+| Verify Evidence | Quick (storage + blockchain) or full (3-layer) verify |
+| Chain of Custody | Case timeline viewer |
 
-### Folder Structure
+### Stack
 
-```text
-frontend/
-  src/
-    components/
-    pages/
-      Upload.jsx
-      Verify.jsx
-    services/
-      api.js
-    App.jsx
-```
+- React 18, Vite 5
+- Tailwind CSS 3
+- Axios (`src/services/api.js`)
+- Lucide React icons
 
-### Run Frontend
-
-From the `frontend` folder:
+### Run
 
 ```bash
+cd frontend
 npm install
 npm run dev
 ```
 
-Open: [http://localhost:5173](http://localhost:5173)
+Open [http://localhost:5173](http://localhost:5173). Backend must run on [http://127.0.0.1:8000](http://127.0.0.1:8000).
 
-### Connect to Backend
+### API base URL
 
-- Ensure FastAPI backend is running on: `http://127.0.0.1:8000`
-- API base URL is configured in `src/services/api.js`
-- Endpoints used:
-  - `POST /upload`
-  - `POST /verify`
+Configured in `src/services/api.js`:
 
-If your backend URL changes, update `baseURL` in `src/services/api.js`.
+```js
+baseURL: "http://127.0.0.1:8000/api"
+```
+
+### Build
+
+```bash
+npm run build
+```
+
+Output: `frontend/dist/` (gitignored).
+
+### Legacy files
+
+`UploadEvidence.jsx`, `VerifyEvidence.jsx`, and `EvidenceTimeline.jsx` are unused placeholders from an earlier phase. The live UI is wired through `App.jsx` and the pages listed above.

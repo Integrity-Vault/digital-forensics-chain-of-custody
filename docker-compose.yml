@@ -1,3 +1,4 @@
+# Experimental / not maintained for local dev. See docker/README.md and root README.md.
 version: "3.9"
 
 services:

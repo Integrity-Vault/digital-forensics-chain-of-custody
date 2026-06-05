@@ -1,8 +1,15 @@
 ## ADR-001: Off‑Chain Storage of Digital Evidence Files
 
-**Status**: Accepted  
-**Date**: 2026‑03‑14  
-**Decision Owner**: Architecture Team  
+### Implementation status (current codebase)
+
+| Aspect | Implemented? | Notes |
+|--------|----------------|-------|
+| Off-chain file storage | Yes | `backend/storage/`, plain files |
+| SHA-256 hashing | Yes | `app/services/hashing.py` |
+| On-chain hash registration | Yes | `EvidenceCustody.sol` via Ganache |
+| Chain of custody (SQLite) | Yes | `chain_of_custody_events` table |
+| Encryption at rest | **No** | `encryption.py` raises `NotImplementedError` |
+| Encrypted object store / KMS | **No** | Future work |
 
 ---
 

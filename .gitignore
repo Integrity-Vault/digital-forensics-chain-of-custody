@@ -1,11 +1,44 @@
+# Environment and secrets
 .env
-node_modules/
+.env.*
+!.env.example
+backend/.env
+!backend/.env.example
+
+# Python
 __pycache__/
-*.db
-*.key
-*.pem
+*.py[cod]
 venv/
 backend/venv/
+.venv/
+
+# Node
 node_modules/
+frontend/node_modules/
+blockchain/node_modules/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Cryptographic material (never commit)
+*.key
+*.pem
+*.p12
+mnemonic.txt
+ganache-db/
+
+# Evidence and build artifacts
+backend/storage/*
+!backend/storage/.gitkeep
 frontend/dist/
-backend/storage/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
